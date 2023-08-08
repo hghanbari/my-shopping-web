@@ -3,7 +3,7 @@ import formatCurrency from "../util";
 import { Fade, Zoom } from "react-awesome-reveal";
 import Modal from "react-modal";
 import { connect } from "react-redux";
-import { fetchProducts } from "../actions/productActions";
+import { fetchProducts } from "../actions/ProductActions";
 
 class Products extends Component {
   constructor(props) {
@@ -24,7 +24,6 @@ class Products extends Component {
 
   render() {
     const { product } = this.state;
-    console.log(this.props.products);
     return (
       <div>
         <Fade cascade direction="down">
