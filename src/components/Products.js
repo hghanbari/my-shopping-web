@@ -3,7 +3,7 @@ import formatCurrency from "../util";
 import { Fade, Zoom } from "react-awesome-reveal";
 import Modal from "react-modal";
 import { connect } from "react-redux";
-import { fetchProducts } from "../actions/ProductActions";
+import { fetchProducts } from "../actions/productActions";
 
 class Products extends Component {
   constructor(props) {
