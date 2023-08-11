@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const uuid = require("uuid");
 const dotenv = require("dotenv");
+const { async } = require("q");
 
 const app = express();
 app.use(bodyParser.json());
@@ -47,6 +48,59 @@ app.post("/api/products", async (req, res) => {
 app.delete("/api/products/:id", async (req, res) => {
   const deletedProduct = await Product.findByIdAndDelete(req.params.id);
   res.send(deletedProduct);
+});
+
+const Order = mongoose.model(
+  "order",
+  new mongoose.Schema(
+    {
+      _id: {
+        type: String,
+        default() {
+          return uuid.v4();
+        },
+      },
+      email: String,
+      name: String,
+      address: String,
+      total: Number,
+      cartItems: [
+        {
+          _id: String,
+          title: String,
+          price: Number,
+          count: Number,
+        },
+      ],
+    },
+    {
+      timestamps: true,
+    }
+  )
+);
+
+app.post("/api/orders", async (req, res) => {
+  if (
+    !req.body.name ||
+    !req.body.email ||
+    !req.body.address ||
+    !req.body.total ||
+    !req.body.cartItems
+  ) {
+    return res.send({ message: "Data is required." });
+  }
+  const order = await Order(req.body).save();
+  res.send(order);
+});
+
+app.get("/api/orders", async (req, res) => {
+  const orders = await Order.find({});
+  res.send(orders);
+});
+
+app.delete("/api/orders:id", async (req, res) => {
+  const deletedOrder = await Order.findByIdAndDelete(req.params.id);
+  res.send(deletedOrder);
 });
 
 const port = process.env.Port || 4000;
