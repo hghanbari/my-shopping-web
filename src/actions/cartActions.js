@@ -1,8 +1,6 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from "../types";
 
 export const addToCart = (product) => (dispatch, getState) => {
-  // console.log();
-  // debugger;
   const cartItems = getState().cart.cartItems.slice();
   let alreadyExists = false;
   cartItems.forEach((x) => {
@@ -22,7 +20,6 @@ export const addToCart = (product) => (dispatch, getState) => {
 };
 
 export const removeFromCart = (product) => (dispatch, getState) => {
-  debugger;
   const cartItems = getState()
     .cart.cartItems.slice()
     .filter((x) => x._id !== product._id);
